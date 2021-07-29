@@ -2,6 +2,10 @@ plugins {
     id 'java'
 }
 
+configurations {
+    bundleOnly
+}
+
 group 'nl.hypothermic'
 version rootProject.version
 
@@ -16,6 +20,8 @@ dependencies {
     runtime project(':asm-htf-api')
     implementation project(':asm-htf-api')
 
+    bundleOnly project(':asm-htf-utils')
+
     compileOnly 'org.projectlombok:lombok:1.18.20'
     annotationProcessor 'org.projectlombok:lombok:1.18.20'
     testCompileOnly 'org.projectlombok:lombok:1.18.20'
@@ -24,6 +30,11 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+compileJava {
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
 }
 
 jar {
@@ -39,15 +50,31 @@ jar {
                 'Implementation-Version': this.version
         )
     }
-}
 
-compileJava {
-    sourceCompatibility = '1.8'
-    targetCompatibility = '1.8'
-}
-
-jar {
     from {
         configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }
+
+task bundleJar(type: Jar) {
+    manifest {
+        attributes (
+                'Premain-Class': 'nl.hypothermic.htf.loader.Premain',
+                'Can-Redefine-Classes': 'true',
+                'Can-Retransform-Classes': 'true',
+                'Can-Set-Native-Method-Prefix': 'true',
+                'Specification-Title': rootProject.name,
+                'Specification-Version': rootProject.version,
+                'Implementation-Title': this.name,
+                'Implementation-Version': this.version
+        )
+    }
+
+    from sourceSets.main.output
+    from configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) }
+    from configurations.bundleOnly.collect { it.isDirectory() ? it : zipTree(it) }
+
+    archiveBaseName = 'asm-htf-bundle'
+}
+
+assemble.dependsOn(bundleJar)

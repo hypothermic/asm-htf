@@ -1,4 +1,4 @@
-package nl.hypothermic.htf.loader;
+package nl.hypothermic.htf.utils;
 
 /*
  * Casting primitives to Objects in bytecode is really fucking hard,
@@ -8,6 +8,7 @@ package nl.hypothermic.htf.loader;
  * 2. INVOKESTATIC nl/hypothermic/notahack/loader/AsmObjectCastUtil.cast ({type})Ljava/lang/Object;
  * 3. Your new Object is at the top of the stack!
  */
+@SuppressWarnings("unused") // reflected upon
 public final class AsmObjectCastUtil {
 
 	private AsmObjectCastUtil() {
@@ -31,6 +32,6 @@ public final class AsmObjectCastUtil {
 	}
 
 	public static int toInt(boolean value) {
-		return (boolean) value ? 1 : 0;
+		return value ? 1 : 0;
 	}
 }

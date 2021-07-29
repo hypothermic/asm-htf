@@ -8,3 +8,5 @@ gradle.rootProject {
     it.group = 'nl.hypothermic'
     it.version = '10.0.0.1'
 }
+include 'asm-htf-utils'
+
