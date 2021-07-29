@@ -1,0 +1,30 @@
+plugins {
+    id 'java'
+}
+
+group 'nl.hypothermic'
+version '10.0.0.1'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+
+    runtime project(':asm-htf-api')
+    implementation project(':asm-htf-api')
+
+    compileOnly project(':asm-htf-processor')
+    annotationProcessor project(':asm-htf-processor')
+}
+
+test {
+    useJUnitPlatform()
+}
+
+compileJava {
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+}

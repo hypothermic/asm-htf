@@ -1,0 +1,10 @@
+include 'asm-htf-api'
+include 'asm-htf-loader'
+include 'asm-htf-processor'
+include 'example-addon'
+
+rootProject.name = 'asm-htf'
+gradle.rootProject {
+    it.group = 'nl.hypothermic'
+    it.version = '10.0.0.1'
+}
