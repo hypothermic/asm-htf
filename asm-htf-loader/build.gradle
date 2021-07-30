@@ -78,8 +78,6 @@ task bundleJar(type: Jar) {
     archiveBaseName = 'asm-htf-bundle'
 }
 
-assemble.dependsOn(bundleJar)
-
 publishing {
     repositories {
         maven {

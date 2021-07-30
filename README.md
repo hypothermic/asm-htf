@@ -17,3 +17,24 @@ A Java annotation processor will take care of indexing all transformers/hooks/ga
 
 To ease the development of transformers and hooks, developers may opt to add use the *asm-htf-utils* module.
 This module provides a high-level layer to work with Gateways and other bytecode instructions.
+
+## Build Instructions
+
+The following command will generate a JAR for all modules (api, loader, processor, utils)
+and a bundled JAR with all required runtime dependencies (api, loader, utils).
+
+```shell
+$ clean build :asm-htf-loader:bundleJar
+```
+
+As with any Gradle umbrella project, the output JARs can be found in the directories `/*/build/libs/*.jar`.
+You can also run the following command in the project root directory to search for the output JARs:
+
+```shell
+$ find . -type d \( -path ./gradle -o -path ./example-addon \) -prune -false -o -name '*.jar'               
+./asm-htf-api/build/libs/asm-htf-api-10.0.0.1.jar
+./asm-htf-loader/build/libs/asm-htf-loader-10.0.0.1.jar
+./asm-htf-loader/build/libs/asm-htf-bundle-10.0.0.1.jar
+./asm-htf-processor/build/libs/asm-htf-processor-10.0.0.1.jar
+./asm-htf-utils/build/libs/asm-htf-utils-10.0.0.1.jar
+```
